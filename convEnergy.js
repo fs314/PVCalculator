@@ -1,8 +1,11 @@
-
-function areaFunc(txt) {
-   document.getElementById("selectedZone").innerHTML = txt;
-
+if (typeof jQuery === "undefined") {
+    var script = document.createElement('script');
+    script.src = 'https://code.jquery.com/ui/1.12.1/jquery-ui.js';
+    script.type = 'text/javascript';
+    document.getElementsByTagName('head')[0].appendChild(script);
 }
+
+window.onload = function() {
 
 $(document).ready(function () {
 
@@ -84,13 +87,19 @@ $(document).ready(function () {
       });
 
       $('#calculate').click(function(){
-        var warning = "7";
+        var warning = " ";
         var slope =  parseInt($('#slope').val()) + 2;
         var orientation =  (parseInt($('#orientation').val())/5)+1;
         if(orientation>19) {
           warning = "orientation is not ideal to install PV, please contact us for a more detailed analysis"
         }
         var result = $('#myTable').find("tr:eq("+slope+")").find("td:eq("+orientation+")").text();
-        alert(result + " any warning " + warning);
+        alert(result + " " + warning);
       });
 });
+}
+
+function areaFunc(txt) {
+   document.getElementById("selectedZone").innerHTML = "You selected: " + txt;
+
+}
