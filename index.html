@@ -5,11 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-
   <script type="text/javascript" src="convEnergy.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <style media="screen" src="convEnergy.css"></style>
+  <style media="screen">
+  .a {
+    font-style: oblique;
+    text-align: center;
+  }
+  </style>
   <script rel="text/javascript" href="test(1).js"> </script>
 </head>
 
@@ -46,8 +51,7 @@
     <area id="zone9S" title="Postcodes: EH43-46, TD" onClick='areaFunc("Zone 9(S)");' shape="poly" coords="391,398,418,373,418,361,425,351,417,340,410,331,407,341,398,345,389,345,379,346,374,352,367,350,360,346,355,349,358,354,351,362,355,368,354,375,363,375,365,381,373,380,375,389,385,389">
 </map>
 
-<p>Please complete the form below to receive an estimate of the installation expenses</p>
-
+<p>Complete the form below to receive an estimated annual </p>
 <form id="myForm">
 Where do you live? Please click on the map to select the zone and hoover on each area to check your postcode's included. <p id="selectedZone"> </p>
 <!--<p><label for="zone"> Which zone do you live in?</label><input id="zone" title="please insert zone of residency. Suggested option based on what you picked" placeholder="" name="selectedZone"></p>
@@ -91,13 +95,14 @@ Orientation: <select name="Orientation" id="orientation">
   <option value="165" >165°</option>
   <option value="170" >170°</option>
   <option value="175" >175°</option>
+</select>
+ <br />
 
-                         </select>
-						 <br />
-        <input id="calculate" type="button"  value="button" />
+<input id="calculate" type="button"  value="button" />
 </form>
 
 <div id="table"></div>
 
+<p class="a">"This system performance calculation has been undertaken using estimated values for array orientation, inclination and shading. Actual performance may be significantly lower or higher if the characteristics of the installed system vary from the estimated values."</p>
 </body>
 </html>

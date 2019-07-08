@@ -3,5 +3,11 @@ label {
   width: 5em;
 }
 
+.a {
+  font-style: oblique;
+  text-align: center;
+  color: red;
+}
+
 #draggable { width: 150px; height: 150px; padding: 0.5em; }
 #droppable {style="border:1px solid #d3d3d3;"}
