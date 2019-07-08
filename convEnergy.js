@@ -90,11 +90,19 @@ $(document).ready(function () {
         var warning = " ";
         var slope =  parseInt($('#slope').val()) + 2;
         var orientation =  (parseInt($('#orientation').val())/5)+1;
-        if(orientation>19) {
-          warning = "orientation is not ideal to install PV, please contact us for a more detailed analysis"
+        var percentageSF = 1-(parseInt($('#selectSF').val())/100);
+        var kwp =  parseInt($('#kwp').val());
+        if(kwp>50) {
+          warning = warning + "\n" + "Warning: with kWp values above than 50, please contact us for a more detailed analysis \n";
+        } else if (isNaN(kwp) || kwp < 0 ) {
+          warning = "\n" + "Warning: please input valid value for kWp \n";
         }
-        var result = $('#myTable').find("tr:eq("+slope+")").find("td:eq("+orientation+")").text();
-        alert(result + " " + warning);
+        if(orientation>19) {
+          warning = warning + "\n" + "Warning: an orientation above 90° is not ideal to install PV, please contact us for a more detailed analysis \n";
+        }
+        var kk = $('#myTable').find("tr:eq("+slope+")").find("td:eq("+orientation+")").text();
+        var result = kwp * kk * percentageSF;
+        alert("\n" + result + " " + warning);
       });
 });
 }
