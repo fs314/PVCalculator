@@ -92,17 +92,30 @@ $(document).ready(function () {
         var orientation =  (parseInt($('#orientation').val())/5)+1;
         var percentageSF = 1-(parseInt($('#selectSF').val())/100);
         var kwp =  parseInt($('#kwp').val());
+        if (isNaN(slope) || slope < 0 || slope > 92) {
+          warning = warning + "\n" + "Warning: please input valid value for slope \n";
+        }
+
         if(kwp>50) {
           warning = warning + "\n" + "Warning: with kWp values above than 50, please contact us for a more detailed analysis \n";
         } else if (isNaN(kwp) || kwp < 0 ) {
-          warning = "\n" + "Warning: please input valid value for kWp \n";
+          warning = warning + "\n" + "Warning: please input valid value for kWp \n";
         }
+
         if(orientation>19) {
           warning = warning + "\n" + "Warning: an orientation above 90° is not ideal to install PV, please contact us for a more detailed analysis \n";
         }
+
         var kk = $('#myTable').find("tr:eq("+slope+")").find("td:eq("+orientation+")").text();
         var result = kwp * kk * percentageSF;
-        alert("\n" + result + " " + warning);
+
+        if(result != 0){
+            alert("\n Annual AC output (kWh): " + result + " " + warning); // (INSERT TO HAVE IDEA OF DATA) + "\n " + "slope: " + slope + "orientation: " + orientation + "percentageSF: " + percentageSF + "kwp " + kwp + "kk: " + kk
+        } else {
+            warning = warning + "\n" + "Warning: we have found an error. Please check you have selected a Zone and that all inputs are valid";
+              alert("\n" + warning);
+        }
+
       });
 });
 }
