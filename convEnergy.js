@@ -6,7 +6,6 @@ if (typeof jQuery === "undefined") {
 }
 
 window.onload = function() {
-
 $(document).ready(function () {
 
   /*
@@ -89,24 +88,23 @@ $(document).ready(function () {
       });
 
       /*
-      creates a new form for roof on clicking the "add roof" button
+      creates a new form for each roof by clicking the "add roof" button
       */
-     var $i = 1;
+     var $i = 2;
      $("#addRoof").click(function() {
-       if($i<4) {
+       if($i<5) {
        var newId = "roof" + $i;
        var newSlope = "slope" + $i
        var newOrient = "orientation" + $i;
        var newSf = "selectSF"  + $i;
        var newkWp = "kwp"  + $i;
-       var newCalc = "calculate"  + $i++;
+       $i++;
 
-       var clone = $("#roof0").clone().attr("id", newId);
-       clone.find("#slope").attr("id", newSlope);
-       clone.find("#orientation").attr("id", newOrient);
-       clone.find("#selectSF").attr("id", newSf);
-       clone.find("#kwp").attr("id", newkWp);
-       clone.find("#calculate").attr("id", newCalc);
+       var clone = $("#roof1").clone().attr("id", newId);
+       clone.find("#slope1").attr("id", newSlope);
+       clone.find("#orientation1").attr("id", newOrient);
+       clone.find("#selectSF1").attr("id", newSf);
+       clone.find("#kwp1").attr("id", newkWp);
        $("#calculator").append(clone);
      } else {
        alert("\n this calculator cannot add more than 4 roofs. Please contact us if you have any queries");
@@ -114,77 +112,51 @@ $(document).ready(function () {
      });
 
       /*
-      Calculates Annual AC output(kWh) depending on input zone, slope, orientation and shading factor
+      Calculates Annual AC output(kWh) for each roof depending on input zone, slope, orientation and shading factor
       */
-      $('#calculate').click(function(){
-        var warning = " ";
-        var slope =  parseInt($('#slope').val()) + 2;
-        var orientation =  (parseInt($('#orientation').val())/5)+1;
-        var percentageSF = 1-(parseInt($('#selectSF').val())/100);
-        var kwp =  parseInt($('#kwp').val());
-        if (isNaN(slope) || slope < 0 || slope > 92) {
-          warning = warning + "\n" + "Warning: please input valid value for slope \n";
-        }
+     $('#calculate').click(function(){
+       var $msg = "\n ";
+       for (var $a=1; $a<=$("#calculator").children().length; $a++) {
+         var $roofId = "roof" + $a;
+         var $newSlope = "#slope" + $a;
+         var $newOrient = "#orientation" + $a;
+         var $newSf = "#selectSF" + $a;
+         var $newkWp = "#kwp" + $a;
+         var $roof = $("#calculator").find($roofId);
+         var warning = "\n Warning: we found the following errors for " + $roofId + ": ";
 
-        if(kwp>50) {
-          warning = warning + "\n" + "Warning: with kWp values above than 50, please contact us for a more detailed analysis \n";
-        } else if (isNaN(kwp) || kwp < 0 ) {
-          warning = warning + "\n" + "Warning: please input valid value for kWp \n";
-        }
+          var slope =  parseInt($($newSlope).val()) + 2;
+          var orientation =  (parseInt($($newOrient).val())/5)+1;
+          var percentageSF = 1-(parseInt($($newSf).val())/100);
+          var kwp =  parseInt($($newkWp).val());
 
-        if(orientation>19) {
-          warning = warning + "\n" + "Warning: an orientation above 90° is not ideal to install PV, please contact us for a more detailed analysis \n";
-        }
+          //extracts table value based on slope and orientation
+          var kk = $('#myTable').find("tr:eq("+slope+")").find("td:eq("+orientation+")").text();
+          var result = kwp * kk * percentageSF;
 
-        //extracts table value based on slope and orientation
-        var kk = $('#myTable').find("tr:eq("+slope+")").find("td:eq("+orientation+")").text();
-        var result = kwp * kk * percentageSF;
+          //Warnings:
+          if (isNaN(slope) || slope < 0 || slope > 92) {
+            warning = warning + "\n" + " - please input valid value for slope \n";
+          }
 
-        if(result != 0){
-            alert("\n Annual AC output (kWh): " + result + " " + warning); // (INSERT TO HAVE IDEA OF DATA) + "\n " + "slope: " + slope + "orientation: " + orientation + "percentageSF: " + percentageSF + "kwp " + kwp + "kk: " + kk
-        } else {
-            warning = warning + "\n" + "Warning: we have found an error. Please check you have selected a Zone and that all inputs are valid";
-              alert("\n" + warning);
-        }
-      });
+          if(kwp>50) {
+            warning = warning + "\n" + " - with kWp values above than 50, please contact us for a more detailed analysis \n";
+          } else if (isNaN(kwp) || kwp < 0 ) {
+            warning = warning + "\n" + " - please input valid value for kWp \n";
+          }
 
-      /*
-      TRIAL TRIAL TRIAL TRIAL TRIAL TRIAL
-      */
-      $('#calculate1').click(function(){
-        var warning = " ";
-        var slope =  parseInt($('#slope1').val()) + 2;
-        var orientation =  (parseInt($('#orientation1').val())/5)+1;
-        var percentageSF = 1-(parseInt($('#selectSF1').val())/100);
-        var kwp =  parseInt($('#kwp1').val());
+          if(orientation>19) {
+            warning = warning + "\n" + " - an orientation above 90° is not ideal to install PV, please contact us for a more detailed analysis \n";
+          }
 
-        //extract value from zone table selected according to slope and orientation
-        var kk = $('#myTable').find("tr:eq("+slope+")").find("td:eq("+orientation+")").text();
-        //result Annual AC(kWh):
-        var result = kwp * kk * percentageSF;
-
-        //Warnings:
-        if (isNaN(slope) || slope < 0 || slope > 92) {
-          warning = warning + "\n" + "Warning: please input valid value for slope \n";
-        }
-
-        if(kwp>50) {
-          warning = warning + "\n" + "Warning: with kWp values above than 50, please contact us for a more detailed analysis \n";
-        } else if (isNaN(kwp) || kwp < 0 ) {
-          warning = warning + "\n" + "Warning: please input valid value for kWp \n";
-        }
-
-        if(orientation>19) {
-          warning = warning + "\n" + "Warning: an orientation above 90° is not ideal to install PV, please contact us for a more detailed analysis \n";
-        }
-
-        if(result != 0){
-            alert("\n Annual AC output (kWh): " + result + " " + warning); // (INSERT TO HAVE IDEA OF DATA) + "\n " + "slope: " + slope + "orientation: " + orientation + "percentageSF: " + percentageSF + "kwp " + kwp + "kk: " + kk
-        } else {
-            warning = warning + "\n" + "Warning: we have found an error. Please check you have selected a Zone and that all inputs are valid";
-              alert("\n" + warning);
-        }
-
+          if(result != 0){
+            $msg = $msg + "\n Annual AC output (kWh) for " + $roofId + " : " + result + " \n";
+          } else {
+              warning = warning + "\n" + " - we have found an error. Please check you have selected a Zone and that all inputs are valid";
+          }
+          $msg = $msg + warning;
+       }
+       alert($msg);
       });
 });
 }
@@ -197,28 +169,3 @@ function areaFunc(txt) {
    document.getElementById("selectedZone").innerHTML = "You selected: " + txt;
 
 }
-
-
-/*
-creates a new form for roof on clicking the "add roof" button
-*/
-/*
-var i =0;
-
-function duplicate() {
-  if (i<3) {
-  var original = document.getElementById("roof" + i);
-  var clone = original.cloneNode(true);
-  i++;
-
-  clone.id = "roof" + i;
-  clone.getElementsByTagName('select')[0].id = "orientation" + i;
-  clone.getElementsByTagName('select')[1].id = "selectSF" + i;
-  clone.getElementsByTagName('input')[0].id = "slope" + i;
-  clone.getElementsByTagName('input')[1].id = "kwp" + i;
-  clone.getElementsByTagName('input')[2].id = "calculate" + i;
-  original.parentNode.appendChild(clone);
-} else {
-  alert("\n this calculator cannot add more than 4 roofs. Please contact us if you have any queries");
-}
-} */
