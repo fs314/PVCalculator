@@ -116,6 +116,9 @@ $(document).ready(function () {
       */
      $('#calculate').click(function(){
        var $msg = "\n ";
+       var totalAC = 0;
+       var totalHighest = 0;
+       var totalLowest = 0;
        for (var $a=1; $a<=$("#calculator").children().length; $a++) {
          var $roofId = "roof" + $a;
          var $newSlope = "#slope" + $a;
@@ -132,7 +135,13 @@ $(document).ready(function () {
 
           //extracts table value based on slope and orientation
           var kk = $('#myTable').find("tr:eq("+slope+")").find("td:eq("+orientation+")").text();
-          var result = kwp * kk * percentageSF;
+          var annualAC = kwp * kk * percentageSF;
+          totalAC = totalAC + annualAC;
+
+          var highest = Math.round(1.2785*Math.pow(kwp,2) + 951.68*kwp + 2510.8);
+          var lowest  = Math.round(2.4329*Math.pow(kwp,2) + 819.87*kwp + 1404.4);
+          totalLowest = totalLowest + lowest;
+          totalHighest = totalHighest + highest;
 
           //Warnings:
           if (isNaN(slope) || slope < 0 || slope > 92) {
@@ -149,14 +158,15 @@ $(document).ready(function () {
             warning = warning + "\n" + " - an orientation above 90° is not ideal to install PV, please contact us for a more detailed analysis \n";
           }
 
-          if(result != 0){
-            $msg = $msg + "\n Annual AC output (kWh) for " + $roofId + " : " + result + " \n";
+          if(annualAC != 0){
+            $result = "\n Annual AC output (kWh) for " + $roofId + " : " + annualAC + " \n";
           } else {
               warning = warning + "\n" + " - we have found an error. Please check you have selected a Zone and that all inputs are valid";
           }
-          $msg = $msg + warning;
+          $msg = $result + warning ;
        }
-       alert($msg);
+       $msg = $msg +  " \n Total annual AC output for system: " + totalAC + "\n range of costs: £" + totalLowest + " - £" + totalHighest;
+       alert($msg );
       });
 });
 }

@@ -4,21 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title> Annual AC and Price Estimate Calculator for PV Systems</title>
   <script type="text/javascript" src="convEnergy.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <style media="screen" src="convEnergy.css"></style>
   <style media="screen">
   .a {
     font-style: oblique;
-    text-align: center;
   }
 
-  footer{
-   position: relative;
-   bottom:0;
-   width:100%;
-   height:60px;   /* Height of the footer */
+  .footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: grey;
+  color: black;
+  text-align: center;
+  font-size: 11px;
   }
   </style>
   <script rel="text/javascript" href="test(1).js"> </script>
@@ -48,7 +51,7 @@
     <area id="zone19" title="Postcodes: KW15-17" onClick='areaFunc("Zone 19");' shape="poly" coords="360,72,380,93,395,65,402,45,376,43,360,61,358,65">
     <area id="zone18" title="Postcodes: HS" onClick='areaFunc("Zone 18");' shape="poly" coords="170,225,177,205,197,163,233,128,230,102,194,124,186,137,174,172,167,181">
     <area id="zone20" title="Postcodes: ZE" onClick='areaFunc("Zone 20");' shape="poly" coords="477,63,497,100,513,62,523,21,482,45">
-    <area id="zone21" title="Postcodes:" onClick='areaFunc("Zone 21");' shape="poly" coords="118,449,131,466,149,479,149,477,165,471,179,454,194,480,193,488,219,486,242,469,245,461,247,445,228,415,220,390,201,386,174,394,159,398,135,427">
+    <area id="zone21" title="Postcodes: BT" onClick='areaFunc("Zone 21");' shape="poly" coords="118,449,131,466,149,479,149,477,165,471,179,454,194,480,193,488,219,486,242,469,245,461,247,445,228,415,220,390,201,386,174,394,159,398,135,427">
     <area id="zone5W" title="Postcodes: CF, NP, SA" onClick='areaFunc("Zone 5(W)");' shape="poly" coords="399,683,383,686,383,693,374,696,365,695,359,700,347,700,335,701,295,708,303,713,310,713,318,712,324,706,330,720,337,721,341,730,356,730,369,717,384,716,399,696,402,688">
     <area id="zone7W" title="Postcodes: CH5-8, LL" onClick='areaFunc("Zone 7(W)");' shape="poly" coords="346,563,354,561,367,568,388,576,382,578,394,584,398,590,402,596,386,595,379,609,367,603,365,594,357,593,349,586,352,576">
     <area id="zone8S" title="Postcodes: DG" onClick='areaFunc("Zone 8(S)");' shape="poly" coords="371,418,387,401,383,392,373,388,369,382,363,385,363,378,352,378,352,384,347,391,338,379,326,378,323,388,312,393,306,403,298,407,291,414,275,409,275,418,267,411,265,418,273,427,275,441,280,445,279,429,282,421,285,427,293,432,304,441,307,429,301,429,316,424,312,429,318,432,323,424,326,433,334,430,343,424,347,417,361,414">
@@ -56,15 +59,12 @@
 </map>
 
 <p>Use our calculator to get the estimated annual electricity generated in kWh/year of an installed system</p>
-<p class="a">Please note <br /> "This system performance calculation has been undertaken using estimated values for array orientation, inclination and shading. Actual performance may be significantly lower or higher if the characteristics of the installed system vary from the estimated values."</p>
 
-<br />
 <p><b>Step 1:</b> Please click on the map to select the zone and hoover on each area to check your postcode's included.</p>
 <p id="selectedZone"> Select Zone </p>
 <p><b>Step 2:</b> Fill the form below and click submit to view the calculated output.</p>
 
 <div id="calculator">
-
 <form id="roof1">
 <br />
 Slope: <input type="number" id="slope1" placeholder="value between 0 - 90" title="The required value is the degrees from horizontal. Hence, an inclination of 0° represents an horizontal array; 90°represents a vertical array"><br />
@@ -107,7 +107,7 @@ Orientation: <select name="Orientation" id="orientation1" title="The required va
   <option value="175" >175°</option>
 </select><br />
 
- Shading Factor: <select name="Shading Factor" id="selectSF1">
+ Shading Factor: <select name="Shading Factor" id="selectSF1" title="Factors that can cause shading include roof structures (e.g. chimneys, satellite dishes, antennas), building surroundings (e.g. trees, neighbouring buildings), temporary factors (e.g. snow, leaves) or anything nearby that is close enough to cause direct shading. Accurate estimations of shading will often require a on-site visit. To know more about how to calculate shading please refer to the MCS guide for photovoltaic systems installation (link at the bottom of page).">
   <option value="0" >0°</option>
   <option value="1" >1°</option>
   <option value="2" >2°</option>
@@ -213,14 +213,19 @@ Orientation: <select name="Orientation" id="orientation1" title="The required va
 kilowatt-peak: <input name="kWp" id="kwp1" type="number" title="the kWp value used shall be the sum of the data plate value (Wp at STC) of all modules installed (the value printed on the module label)"><br />
 </form>
 
-</div><br /> 
+</div><br />
 <input id="calculate" type="button"  value="Submit" />
 <input id="addRoof" type="button" value="Add another roof">
 
+<br />
+<p class="a">Please note <br /> "This system performance calculation has been undertaken using estimated values for array orientation, inclination and shading. Actual performance may be significantly lower or higher if the characteristics of the installed system vary from the estimated values."</p>
+
 <div id="table"></div>
 
-<footer>
-  <p class="a" font-size="4">*calculations and information contained in these page are conformative to the MCS guidelines <br /> for the installation of photovoltaic systems*</p>
-</footer>
+<div class="footer">
+  <p class="a">*calculations and information contained in this page are conformative to the MCS guidelines for the installation of photovoltaic systems*</p>
+  <p font-size = "4">For more information refer to the <a href="https://www.microgenerationcertification.org/wp-content/uploads/2018/02/PV-Book-ELECTRONIC.pdf">MCS guide</a> on the installation of photovoltaic systems or  <a href="https://www.microgenerationcertification.org/"> their website</a></p>
+</div>
+
 </body>
 </html>
