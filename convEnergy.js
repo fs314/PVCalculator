@@ -209,4 +209,6 @@ prints selected zone to show user which zone has been clicked on
 */
 function areaFunc(txt) {
    document.getElementById("selectedZone").innerHTML = "You selected: " + txt;
+   document.getElementById("selectedZone").style.color = 'red';
+
 }
