@@ -131,99 +131,82 @@ $(document).ready(function () {
      $('#calculate').click(function(){
        var $msg = "\n ";
        var totalAC = 0;
-       var totalHighest = 0;
-       var totalLowest = 0;
+       var totalKWP = 0;
+       var costPerRoof = 0;
+       var co2offset = 0;
 
-       for (var $a=1; $a<=$("#calculator").children().length; $a++) {
+       for (var $a=1; $a<=$("#calculator").children().length; $a++) {     //Loops over every roof (form completed) to extract information and calculate annual AC per roof
          var roofId = "roof" + $a;
          var newSlope = "#slope" + $a;
          var newOrient = "#orientation" + $a;
          var newSf = "#selectSF" + $a;
          var newkWp = "#kwp" + $a;
          var roof = $("#calculator").find(roofId);
-         var warning = "\n Warning: we found the following errors for " + roofId + ": ";
-
-         $(".roofName").text(roofId);
 
           var slope =  parseInt($(newSlope).val()) + 2;
           var orientation =  (parseInt($(newOrient).val())/5)+1;
           var percentageSF = 1-(parseInt($(newSf).val())/100);
           var kwp =  parseInt($(newkWp).val());
-
-          //extracts table value based on slope and orientation
-          var kk = $('#myTable').find("tr:eq("+slope+")").find("td:eq("+orientation+")").text();
+          var kk = $('#myTable').find("tr:eq("+slope+")").find("td:eq("+orientation+")").text(); //extracts table value based on slope and orientation
           var annualAC = kwp * kk * percentageSF;
 
-          var highest = Math.round(1.2785*Math.pow(kwp,2) + 951.68*kwp + 2510.8);
-          var lowest  = Math.round(2.4329*Math.pow(kwp,2) + 819.87*kwp + 1404.4);
+          totalKWP = totalKWP + kwp;
+          costPerRoof = costPerRoof + 800;
 
           totalAC = totalAC + annualAC;
-          totalLowest = totalLowest + lowest;
-          totalHighest = totalHighest + highest;
 
-          //var warning = getWarnings(newSlope, newOrient, newkWp, newSf);
-
-          //Warnings:
+          var warning = "\n Warning: we found the following errors for " + roofId + ": ";
+          var error = false;
+          /* ------------------------------Warnings:------------------------------ */
           if (isNaN(slope) || slope < 0 || slope > 92) {
             warning = warning + "\n" + " - please input valid value for slope \n";
+            error = true;
           }
 
           if(kwp>50) {
             warning = warning + "\n" + " - with kWp values above than 50, please contact us for a more detailed analysis \n";
+            error = true;
           } else if (isNaN(kwp) || kwp < 0 ) {
             warning = warning + "\n" + " - please input valid value for kWp \n";
+            error = true;
           }
 
           if(orientation>19) {
             warning = warning + "\n" + " - an orientation above 90° is not ideal to install PV, please contact us for a more detailed analysis \n";
+            error = true;
           }
 
           if(annualAC == 0){
             warning = warning + "\n" + " - we have found an error. Please check you have selected a Zone and that all inputs are valid";
-          }  else {
-            $result = "\n Annual AC output (kWh) for " + roofId + " : " + annualAC + " \n";
-            $msg = $msg + $result + warning ;
+            error = true;
           }
-          //$msg = $msg + $result + warning ;
-       }
-       $msg = $msg +  " \n Total annual AC output for system: " + totalAC + "\n range of costs: £" + totalLowest + " - £" + totalHighest;
+
+          /* final output per roof */
+          $result = "\n Annual AC output (kWh) for " + roofId + " : " + annualAC + " \n";
+          $msg = $msg + $result;
+
+          if (error == true) {
+            $msg = $msg + warning;
+          }
+       }  // loop ends here
+
+       /* Cost range is calculated by inserting the sum of the kilowatt-peak value of each roof
+         into the below equations (estimating lower and upper bound of range respectively) and adding an extra £800 per roof. */
+       var lowest  = Math.round(2.4329*Math.pow(totalKWP,2) + 819.87*totalKWP + 1404.4) + costPerRoof;
+       var highest = Math.round(1.2785*Math.pow(totalKWP,2) + 951.68*totalKWP + 2510.8) + costPerRoof;
+
+       co2Offset = Math.round(totalAC * 0.304);
+       /* prints final pop-up message including annual AC for each roof, the total annual AC for the system, an overall cost range for the installation
+       as well as, should there be any, warnings regarding user input mistakes or input values restrictions */
+       $msg = $msg +  "\n-----------------------------------------\n Total annual AC output for system: " + Math.round(totalAC) + "\n CO2 offset: " + co2Offset + "Kg \n range of costs: £" + lowest + " - £" + highest;
        alert($msg );
       });
-
 });
 }
-/*
-function getWarnings(newSlope, newOrient, newkWp, newSf) {
-  var slope = document.getElementById(newSlope).value;
-  var orientation = document.getElementById(newOrient).value;
-  var kwp = document.getElementById(newkWp).value;
-  var sf = document.getElementById(newSf).value;
-  var warning;
-
-  if (isNaN(slope) || slope < 0 || slope > 92) {
-    warning = warning + "\n" + " - please input valid value for slope \n";
-  }
-
-  if(kwp>50) {
-    warning = warning + "\n" + " - with kWp values above than 50, please contact us for a more detailed analysis \n";
-  } else if (isNaN(kwp) || kwp < 0 ) {
-    warning = warning + "\n" + " - please input valid value for kWp \n";
-  }
-
-  if(orientation>19) {
-    warning = warning + "\n" + " - an orientation above 90° is not ideal to install PV, please contact us for a more detailed analysis \n";
-  }
-
-  if(annualAC == 0){
-    warning = warning + "\n" + " - we have found an error. Please check you have selected a Zone and that all inputs are valid";
-  }
-return "Warning: we found some errors for " + roofId + " :" + warning;
-} */
 
 /*
 prints selected zone to show user which zone has been clicked on
 */
 function areaFunc(txt) {
    document.getElementById("selectedZone").innerHTML = "You selected: " + txt;
-
 }
