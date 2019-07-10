@@ -1,12 +1,25 @@
+.a {
+  font-style: oblique;
+}
+
+.footer {
+position: fixed;
+left: 0;
+bottom: 0;
+width: 100%;
+background-color: #e3f2f7;
+color: black;
+text-align: center;
+font-size: 11px;
+}
+
+.roofNames{
+font-weight: bold;
+}
+
 label {
   display: inline-block;
   width: 5em;
-}
-
-.a {
-  font-style: oblique;
-  text-align: center;
-  color: red;
 }
 
 #draggable { width: 150px; height: 150px; padding: 0.5em; }
