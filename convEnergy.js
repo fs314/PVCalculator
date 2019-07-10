@@ -88,7 +88,7 @@ $(document).ready(function () {
       });
 
       /*
-      creates a new form for each roof by clicking the "add roof" button
+      creates a new form for each roof by clicking the "add roof" button (up to 4 roofs only)
       */
      var $i = 2;
      $("#addRoof").click(function() {
@@ -113,6 +113,9 @@ $(document).ready(function () {
      }
      });
 
+     /*
+     deletes the last created roof form by clicking on "delete roof". Does not work on first form.
+     */
      $("#deleteRoof").click(function() {
       if($i>2) {
         $('#calculator').find('.forms').not(':first').last().remove();
