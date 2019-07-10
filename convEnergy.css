@@ -17,8 +17,14 @@ font-size: 11px;
 font-weight: bold;
 }
 
+.center-map {
+    margin: 0 auto;
+    float: left;
+    width: 50%
+}
+
 label {
-  display: inline-block;
+  display: inline-block; 
   width: 5em;
 }
 
