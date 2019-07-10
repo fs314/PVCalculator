@@ -18,10 +18,14 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: grey;
+  background-color: #e3f2f7;
   color: black;
   text-align: center;
   font-size: 11px;
+  }
+
+  .roofNames{
+  font-weight: bold;
   }
   </style>
   <script rel="text/javascript" href="test(1).js"> </script>
@@ -65,10 +69,11 @@
 <p><b>Step 2:</b> Fill the form below and click submit to view the calculated output.</p>
 
 <div id="calculator">
-<form id="roof1">
+<form id="roof1" class="forms">
 <br />
-Slope: <input type="number" id="slope1" placeholder="value between 0 - 90" title="The required value is the degrees from horizontal. Hence, an inclination of 0° represents an horizontal array; 90°represents a vertical array"><br />
-Orientation: <select name="Orientation" id="orientation1" title="The required value is the azimuth angle of the PV modules relative to due South. Hence, an array facing south has an azimuth value of 0°; an array facing either SW or SE has an azimuth value of 45°; and an array facing East or West has an azimuth value of 90°">
+<span id="roofName1" class="roofNames">ROOF 1</span><br />
+Slope: <input type="number" id="slope1" placeholder="value between 0 - 90" title="The required value is the degrees from horizontal. Hence, an inclination of 0° represents an horizontal array; 90°represents a vertical array" required><br />
+Orientation: <select name="Orientation" id="orientation1" title="The required value is the azimuth angle of the PV modules relative to due South. Hence, an array facing south has an azimuth value of 0°; an array facing either SW or SE has an azimuth value of 45°; and an array facing East or West has an azimuth value of 90°" required>
   <option value="0">0°</option>
   <option value="5" >5°</option>
   <option value="10" >10°</option>
@@ -107,7 +112,7 @@ Orientation: <select name="Orientation" id="orientation1" title="The required va
   <option value="175" >175°</option>
 </select><br />
 
- Shading Factor: <select name="Shading Factor" id="selectSF1" title="Factors that can cause shading include roof structures (e.g. chimneys, satellite dishes, antennas), building surroundings (e.g. trees, neighbouring buildings), temporary factors (e.g. snow, leaves) or anything nearby that is close enough to cause direct shading. Accurate estimations of shading will often require a on-site visit. To know more about how to calculate shading please refer to the MCS guide for photovoltaic systems installation (link at the bottom of page).">
+Shading Factor: <select name="Shading Factor" id="selectSF1" title="Factors that can cause shading include roof structures (e.g. chimneys, satellite dishes, antennas), building surroundings (e.g. trees, neighbouring buildings), temporary factors (e.g. snow, leaves) or anything nearby that is close enough to cause direct shading. Accurate estimations of shading will often require a on-site visit. To know more about how to calculate shading please refer to the MCS guide for photovoltaic systems installation (link at the bottom of page)." required>
   <option value="0" >0°</option>
   <option value="1" >1°</option>
   <option value="2" >2°</option>
@@ -210,12 +215,13 @@ Orientation: <select name="Orientation" id="orientation1" title="The required va
   <option value="99" >99°</option>
   <option value="100" >100°</option>
 </select><br />
-kilowatt-peak: <input name="kWp" id="kwp1" type="number" title="the kWp value used shall be the sum of the data plate value (Wp at STC) of all modules installed (the value printed on the module label)"><br />
+kilowatt-peak: <input name="kWp" id="kwp1" type="number" title="the kWp value used shall be the sum of the data plate value (Wp at STC) of all modules installed (the value printed on the module label)" required><br />
 </form>
 
 </div><br />
 <input id="calculate" type="button"  value="Submit" />
 <input id="addRoof" type="button" value="Add another roof">
+<input id="deleteRoof" type="button" value= "delete roof">
 
 <br />
 <p class="a">Please note <br /> "This system performance calculation has been undertaken using estimated values for array orientation, inclination and shading. Actual performance may be significantly lower or higher if the characteristics of the installed system vary from the estimated values."</p>
