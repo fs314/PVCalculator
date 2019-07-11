@@ -49,28 +49,34 @@
     <area id="zone9S" title="Postcodes: EH43-46, TD" onClick='areaFunc("Zone 9(S)");' shape="poly" coords="391,398,418,373,418,361,425,351,417,340,410,331,407,341,398,345,389,345,379,346,374,352,367,350,360,346,355,349,358,354,351,362,355,368,354,375,363,375,365,381,373,380,375,389,385,389">
 </map>
 <h1>PV Calculator</h1>
+
+<div class="introduction">
 <p>Use our calculator to get the estimated annual electricity generated (kWh/year) of an installed system</p>
  <!--BELOW: to link to tutorials videos, substitute the # symbol with the link-->
-<p>Or if you want to understand more about how to PV works and how to estimate its efficiency accurately, look at our tutorials <a href="#"> here!</a></p><br />
+<p>Or if you want to understand more about how to PV works and how to estimate its efficiency accurately, look at our tutorials <a href="#"> here!</a></p>
+<p class="a">Please note <br /> "This system performance calculation has been undertaken using estimated values for array orientation, inclination and shading. Actual performance may be significantly lower or higher if the characteristics of the installed system vary from the estimated values."</p>
+</div><br />
 
+<div class="instructions">
 <p><b>Step 1:</b> Please click on the map to select the zone and hoover on each area to check your postcode's included.</p>
-<p><span id="selectedZone">Select Zone</span></p><br />
+<p><span id="selectedZone">Select Zone</span></p>
 <p><b>Step 2:</b> Fill the form below and click submit to view the calculated output.</p>
+</div>
+
 
 <div id="calculator">
-
 
 <form><br />
 <div id="forms">
 
 <div id="roof1" class="roofs">
 <span id="roofName1" class="roofNames">ROOF 1</span><br />
-Slope: <input type="number" id="slope1" placeholder="value between 0 - 90" title="The required value is the degrees from horizontal. Hence, an inclination of 0° represents an horizontal array; 90°represents a vertical array" required><br />
-Orientation: <select name="Orientation" id="orientation1" title="The required value is the azimuth angle of the PV modules relative to due South. Hence, an array facing south has an azimuth value of 0°; an array facing either SW or SE has an azimuth value of 45°; and an array facing East or West has an azimuth value of 90°" required>
+Slope: <input name="isslope1" type="number" id="slope1" placeholder="value between 0 - 90" title="The required value is the degrees from horizontal. Hence, an inclination of 0° represents an horizontal array; 90°represents a vertical array" required><br />
+Orientation: <select name="isorientation1" id="orientation1" title="The required value is the azimuth angle of the PV modules relative to due South. Hence, an array facing south has an azimuth value of 0°; an array facing either SW or SE has an azimuth value of 45°; and an array facing East or West has an azimuth value of 90°" required>
 </select><br />
-Shading Factor: <select name="Shading Factor" id="selectSF1" title="Factors that can cause shading include roof structures (e.g. chimneys, satellite dishes, antennas), building surroundings (e.g. trees, neighbouring buildings), temporary factors (e.g. snow, leaves) or anything nearby that is close enough to cause direct shading. Accurate estimations of shading will often require a on-site visit. To know more about how to calculate shading please refer to the MCS guide for photovoltaic systems installation (link at the bottom of page)." required>
+Shading Factor: <select name="isselectSF1" id="selectSF1" title="Factors that can cause shading include roof structures (e.g. chimneys, satellite dishes, antennas), building surroundings (e.g. trees, neighbouring buildings), temporary factors (e.g. snow, leaves) or anything nearby that is close enough to cause direct shading. Accurate estimations of shading will often require a on-site visit. To know more about how to calculate shading please refer to the MCS guide for photovoltaic systems installation (link at the bottom of page)." required>
 </select><br />
-kilowatt-peak: <input name="kWp" id="kwp1" type="number" title="the kWp value used shall be the sum of the data plate value (Wp at STC) of all modules installed (the value printed on the module label)" required><br />
+kilowatt-peak: <input name="iskwp1" id="kwp1" type="number" title="the kWp value used shall be the sum of the data plate value (Wp at STC) of all modules installed (the value printed on the module label)" required><br />
 <br /></div>
 </div>
 <input id="calculate" type="button"  value="Submit" />
@@ -80,10 +86,8 @@ kilowatt-peak: <input name="kWp" id="kwp1" type="number" title="the kWp value us
 <input id="deleteRoof" type="button" value= "delete roof"><br />
 </div><br />
 
-
-<p class="a">Please note <br /> "This system performance calculation has been undertaken using estimated values for array orientation, inclination and shading. Actual performance may be significantly lower or higher if the characteristics of the installed system vary from the estimated values."</p>
-
 <div id="table"></div>
+
 
 <div class="footer">
   <p class="a">*calculations and information contained in this page are conformative to the MCS guidelines for the installation of photovoltaic systems*</p>
