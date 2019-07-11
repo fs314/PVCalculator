@@ -107,7 +107,7 @@ $(document).ready(function () {
        clone.find("#selectSF1").attr("id", newSf);
        clone.find("#kwp1").attr("id", newkWp);
        clone.find("#roofName1").text(newRoofName);
-       $("#calculator").append(clone);
+       $("#forms").append(clone);
      } else {
        alert("\n this calculator cannot add more than 4 roofs. Please contact us if you have any queries");
      }
@@ -118,7 +118,7 @@ $(document).ready(function () {
      */
      $("#deleteRoof").click(function() {
       if($i>2) {
-        $('#calculator').find('.forms').not(':first').last().remove();
+        $('#forms').find('.roofs').not(':first').last().remove();
         $i--;
      } else {
        alert("\n there must be at least one roof for this calculator to work");
@@ -135,7 +135,7 @@ $(document).ready(function () {
        var costPerRoof = 0;
        var co2offset = 0;
 
-       for (var $a=1; $a<=$("#calculator").children().length; $a++) {     //Loops over every roof (form completed) to extract information and calculate annual AC per roof
+       for (var $a=1; $a<=$("#forms").children().length; $a++) {     //Loops over every roof (form completed) to extract information and calculate annual AC per roof
          var roofId = "roof" + $a;
          var newSlope = "#slope" + $a;
          var newOrient = "#orientation" + $a;
@@ -202,6 +202,20 @@ $(document).ready(function () {
        alert($msg );
       });
 });
+
+/* populates orientation's dropdown list dynamically */
+for (var ori=0; ori <=175; ori += 5) {
+   var o = new Option(ori, ori); //option text, value
+   $(o).html(ori + "°").attr("name", "optOri" + ori);
+   $("#orientation1").append(o);
+}
+
+/* populates shading factor's dropdown list dynamically */
+for(var sf=0; sf <101; sf ++) {
+  var o = new Option(sf, sf);
+  $(o).html(sf).attr("name", "optSf" + sf);;
+  $("#selectSF1").append(o);
+}
 }
 
 /*

@@ -22,9 +22,18 @@ font-weight: bold;
     float: left;
     width: 50%
 }
+#calculator {
+  position:relative;
+}
+
+#calculate {
+  position: absolute;
+  right:    0;
+  bottom:   0;
+}
 
 label {
-  display: inline-block; 
+  display: inline-block;
   width: 5em;
 }
 
