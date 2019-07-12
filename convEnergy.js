@@ -101,7 +101,7 @@ $(document).ready(function () {
        var newRoofName = "ROOF " + $i;
        $i++;
 
-       var clone = $("#roof1").clone().attr("id", newId);
+       var clone = $("#roof1").clone().attr("id", "roof" + $i);
        clone.find("#slope1").attr("id", newSlope);
        clone.find("#orientation1").attr("id", newOrient);
        clone.find("#selectSF1").attr("id", newSf);
@@ -132,7 +132,7 @@ $(document).ready(function () {
      });
 
       /*
-      Calculates Annual AC output(kWh) for each roof depending on input zone, slope, orientation and shading factor
+      Calculates Annual AC output(kWh and cost(£) for each roof depending on input zone, slope, orientation and shading factor
       */
      $('#calculate').click(function(){
        var $msg = "\n ";
@@ -143,57 +143,21 @@ $(document).ready(function () {
 
        for (var $a=1; $a<=$("#forms").children().length; $a++) {     //Loops over every roof (form completed) to extract information and calculate annual AC per roof
          var roofId = "roof" + $a;
-         var newSlope = "#slope" + $a;
-         var newOrient = "#orientation" + $a;
-         var newSf = "#selectSF" + $a;
-         var newkWp = "#kwp" + $a;
-         var roof = $("#calculator").find(roofId);
+         var slope = getSlope($a);
+         var orientation = getOrientation($a);
+         var shadingFactor = getShadingFactor($a);
+         var kwp = getkWp($a);
 
-          var slope =  parseInt($(newSlope).val()) + 2;
-          var orientation =  (parseInt($(newOrient).val())/5)+1;
-          var percentageSF = 1-(parseInt($(newSf).val())/100);
-          var kwp =  parseInt($(newkWp).val());
-          var kk = $('#myTable').find("tr:eq("+slope+")").find("td:eq("+orientation+")").text(); //extracts table value based on slope and orientation
-          var annualAC = kwp * kk * percentageSF;
+         var kk = calcKk(slope, orientation);
+         var annualAC = calcAC(shadingFactor, kwp, kk);
+         totalAC = totalAC + annualAC;
 
-          totalKWP = totalKWP + kwp;
-          costPerRoof = costPerRoof + 800;
+         totalKWP = totalKWP + kwp;
+         costPerRoof = costPerRoof + 800;
 
-          totalAC = totalAC + annualAC;
-
-          var warning = "\n Warning: we found the following errors for " + roofId + ": ";
-          var error = false;
-          /* ------------------------------Warnings:------------------------------ */
-          if (isNaN(slope) || slope < 0 || slope > 92) {
-            warning = warning + "\n" + " - please input valid value for slope \n";
-            error = true;
-          }
-
-          if(kwp>50) {
-            warning = warning + "\n" + " - with kWp values above than 50, please contact us for a more detailed analysis \n";
-            error = true;
-          } else if (isNaN(kwp) || kwp < 0 ) {
-            warning = warning + "\n" + " - please input valid value for kWp \n";
-            error = true;
-          }
-
-          if(orientation>19) {
-            warning = warning + "\n" + " - an orientation above 90° is not ideal to install PV, please contact us for a more detailed analysis \n";
-            error = true;
-          }
-
-          if(annualAC == 0){
-            warning = warning + "\n" + " - we have found an error. Please check you have selected a Zone and that all inputs are valid";
-            error = true;
-          }
-
-          /* final output per roof */
-          $result = "\n Annual AC output (kWh) for " + roofId + " : " + annualAC + " \n";
-          $msg = $msg + $result;
-
-          if (error == true) {
-            $msg = $msg + warning;
-          }
+         var warning = getWarnings(slope, orientation, kwp, roofId, annualAC);
+         $result = "\n Annual AC output (kWh) for " + roofId + " : " + annualAC + " \n";
+         $msg = $msg + $result + warning; // final calculation output per single roof
        }  // loop ends here
 
        /* Cost range is calculated by inserting the sum of the kilowatt-peak value of each roof
@@ -209,6 +173,80 @@ $(document).ready(function () {
       });
 });
 
+/* returns message containig all inputs' errors or warning encountered per roof */
+function getWarnings(slope, orientation, kwp, roofId, annualAC) {
+  var warning = " ";
+  var alert = "\n Warning: we found the following errors for " + roofId + ": ";
+  var error = false;
+
+  if (isNaN(slope) || slope < 0 || slope > 92) {
+    warning = warning + "\n" + " - please input valid value for slope \n";
+    error = true;
+  }
+
+  if(kwp>50) {
+    warning = warning + "\n" + " - with kWp values above than 50, please contact us for a more detailed analysis \n";
+    error = true;
+  } else if (isNaN(kwp) ||  kwp < 0 ) {
+    warning = warning + "\n" + " - please input valid value for kWp \n";
+    error = true;
+  }
+
+ if(orientation>19) {
+    warning = warning + "\n" + " - an orientation above 90° is not ideal to install PV, please contact us for a more detailed analysis \n";
+    error = true;
+  }
+
+ if(annualAC == 0){
+     warning = warning + "\n" + " - we have found an error. Please check you have selected a Zone and that all inputs are valid";
+     error = true;
+  }
+
+  if (error == true) {
+    warning = alert + warning;
+  }
+return warning;
+}
+
+/* returns the kWp's value inputed by the user */
+function getkWp($a) {
+  var newkWp = "#kwp" + $a;
+  var kwp =  parseInt($(newkWp).val());
+  return kwp;
+}
+
+/* returns the shading factor's value inputed by the user */
+function getShadingFactor($a){
+  var newSf = "#selectSF" + $a;
+  var shadingFactor = 1-(parseInt($(newSf).val())/100);
+  return shadingFactor;
+}
+
+/* returns the index value of the orientation value inputed by the user according to the sap region table  */
+function getOrientation($a) {
+   var newOrient = "#orientation" + $a;
+   var orientation =  (parseInt($(newOrient).val())/5)+1;
+   return orientation;
+}
+/* returns the index value of the slope value inputed by the user according to the sap region table  */
+function getSlope($a) {
+  var newSlope = "#slope" + $a;
+  var slope =  parseInt($(newSlope).val()) + 2;
+  return slope;
+}
+
+/* extracts the correct Kk value from sap regions table depending on the slope and orientation */
+function calcKk(slope, orientation) {
+     var kk = $('#myTable').find("tr:eq("+slope+")").find("td:eq("+orientation+")").text(); //extracts table value based on slope and orientation
+     return kk;
+   }
+
+/* returns the annual AC value of one roof */
+function calcAC(shadingFactor, kwp, kk) {
+   var annualAC = kwp * kk * shadingFactor;
+   return annualAC;
+}
+
 /* populates orientation's dropdown list dynamically */
 for (var ori=0; ori <=175; ori += 5) {
    var o = new Option(ori, ori); //option text, value
@@ -221,8 +259,10 @@ for(var sf=0; sf <101; sf ++) {
   var o = new Option(sf, sf);
   $(o).html(sf + "%");
   $("#selectSF1").append(o);
-}
-}
+  }
+
+} //end of window.onload
+
 
 /*
 prints selected zone to show user which zone has been clicked on
