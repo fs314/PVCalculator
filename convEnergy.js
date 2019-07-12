@@ -135,13 +135,16 @@ $(document).ready(function () {
       Calculates Annual AC output(kWh and cost(£) for each roof depending on input zone, slope, orientation and shading factor
       */
      $('#calculate').click(function(){
-       var $msg = "\n ";
+       var $msg = " ";
        var totalAC = 0;
        var totalKWP = 0;
        var costPerRoof = 0;
        var co2offset = 0;
+       $(".results").remove();
+       $(".warning").remove();
 
        for (var $a=1; $a<=$("#forms").children().length; $a++) {     //Loops over every roof (form completed) to extract information and calculate annual AC per roof
+
          var roofId = "roof" + $a;
          var slope = getSlope($a);
          var orientation = getOrientation($a);
@@ -157,7 +160,10 @@ $(document).ready(function () {
 
          var warning = getWarnings(slope, orientation, kwp, roofId, annualAC);
          $result = "\n Annual AC output (kWh) for " + roofId + " : " + annualAC + " \n";
-         $msg = $msg + $result + warning; // final calculation output per single roof
+        // $msg = $msg + $result + warning; // final calculation output per single roof
+
+         $( "#dialog" ).append( "<p class=\"result\">" + $result +" </p>" );
+         $( "#dialog" ).append( "<p class=\"warning\">" + warning +" </p>" );
        }  // loop ends here
 
        /* Cost range is calculated by inserting the sum of the kilowatt-peak value of each roof
@@ -168,8 +174,15 @@ $(document).ready(function () {
        co2Offset = Math.round(totalAC * 0.304);
        /* prints final pop-up message including annual AC for each roof, the total annual AC for the system, an overall cost range for the installation
        as well as, should there be any, warnings regarding user input mistakes or input values restrictions */
-       $msg = $msg +  "\n-----------------------------------------\n Total annual AC output for system: " + Math.round(totalAC) + "\n CO2 offset: " + co2Offset + "Kg \n range of costs: £" + lowest + " - £" + highest;
-       alert($msg );
+
+      // $msg = $msg +  "\n----------------------------------------- \  Total annual AC output for system: " + Math.round(totalAC) + "\n CO2 offset: " + co2Offset + "Kg \n range of costs: £" + lowest + " - £" + highest;
+
+       $( "#dialog" ).append( "<p class=\"result\"> ----------------------------------------- </p>" );
+       $( "#dialog" ).append( "<p class=\"result\"> Total annual AC output for system: " +  Math.round(totalAC) +" </p>" );
+       $( "#dialog" ).append( "<p class=\"result\"> CO2 offset: " + co2Offset + "Kg </p>" );
+       $( "#dialog" ).append( "<p class=\"result\"> range of costs: £" + lowest + " - £" + highest + " </p>" );
+        $( "#dialog" ).append( "<button onclick=\"myPrint()\">Print this page</button>");
+       $( "#dialog" ).dialog();
       });
 });
 
@@ -270,5 +283,8 @@ prints selected zone to show user which zone has been clicked on
 function areaFunc(txt) {
    document.getElementById("selectedZone").innerHTML = "You selected: " + txt;
    document.getElementById("selectedZone").style.color = 'red';
+}
 
+function myPrint() {
+  window.print();
 }
