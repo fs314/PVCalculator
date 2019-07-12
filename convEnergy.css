@@ -3,6 +3,7 @@ h1{
 }
 
 .a {
+  font-size: 11px;
   font-style: oblique;
   text-align: center;
 }
@@ -32,16 +33,38 @@ font-weight: bold;
 .center-map {
     margin: 0 auto;
     float: left;
-    width: 50%
+    width: 50%;
 }
+
 #calculator {
-  position:relative;
+  position: relative;
   float: right;
-  width: 45%
+  width: 50%;
 }
 
 #calculate {
   position: absolute;
+
   right:    0;
   bottom:   0;
+}
+
+#imageFrame{
+  margin: 0 auto;
+  float: left;
+  width: 50%
+}
+
+.roofs{
+  width:48%;
+  height:130px;
+  margin:6px;
+  border:1px solid black;
+  float: left;
+}
+
+.btn{
+  border-radius: 6px;
+  display: block;
+  width: 10%;
 }
