@@ -196,12 +196,16 @@ function getResults() {
     totalKWP = totalKWP + kwp;
     costPerRoof = costPerRoof + 800;
 
-    var warning = getWarnings(slope, orientation, kwp, roofId, annualAC);
     $result = "\n Annual AC output (kWh) for " + roofId + " : " + annualAC + " \n";
-    $msg = $msg + $result + warning; // final calculation output per single roof
+    results.push("<p class=\"result\">" + $result +" </p>" );   // final calculation output per single roof
 
-    results.push("<p class=\"result\">" + $result +" </p>" );
-    results.push("<p class=\"warning\">" + warning +" </p>");
+    var warning = getWarnings(slope, orientation, kwp, annualAC);
+    if(warning.length>0) {
+      results.push("<p class=\"warning\">" +"Warning: we found the following errors for " + roofId + ": "+" </p>");
+      for(var i=0; i<warning.length; i++) {
+        results.push("<p class=\"warning\">" + warning[i] +" </p>");
+      }
+    }
   }  // loop ends here
 
   /* Cost range is calculated by inserting the sum of the kilowatt-peak value of each roof
@@ -222,37 +226,27 @@ function getResults() {
 }
 
 /* returns message containig all inputs' errors or warning encountered per roof */
-function getWarnings(slope, orientation, kwp, roofId, annualAC) {
-  var warning = " ";
-  var alert = "\n Warning: we found the following errors for " + roofId + ": ";
-  var error = false;
+function getWarnings(slope, orientation, kwp, annualAC) {
+  var warning = [];
 
   if (isNaN(slope) || slope < 0 || slope > 92) {
-    warning = warning + "\n" + " - please input valid value for slope \n";
-    error = true;
+    warning.push(" - please input valid value for slope");
   }
 
   if(kwp>50) {
-    warning = warning + "\n" + " - with kWp values above than 50, please contact us for a more detailed analysis \n";
-    error = true;
+    warning.push(" - with kWp values above than 50, please contact us for a more detailed analysis");
   } else if (isNaN(kwp) ||  kwp < 0 ) {
-    warning = warning + "\n" + " - please input valid value for kWp \n";
-    error = true;
+    warning.push(" - please input valid value for kWp");
   }
 
  if(orientation>19) {
-    warning = warning + "\n" + " - an orientation above 90° is not ideal to install PV, please contact us for a more detailed analysis \n";
-    error = true;
+    warning.push(" - an orientation above 90° is not ideal to install PV, please contact us for a more detailed analysis");
   }
 
  if(annualAC == 0){
-     warning = warning + "\n" + " - we have found an error. Please check you have selected a Zone and that all inputs are valid";
-     error = true;
+    warning.push(" - we have found an error. Please check you have selected a Zone and that all inputs are valid");
   }
 
-  if (error == true) {
-    warning = alert + warning;
-  }
 return warning;
 }
 
