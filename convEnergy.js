@@ -140,8 +140,8 @@ $(document).ready(function () {
        var totalKWP = 0;
        var costPerRoof = 0;
        var co2offset = 0;
-       $(".results").remove();
-       $(".warning").remove();
+       //$(".results").remove();
+       //$(".warning").remove();
 
        for (var $a=1; $a<=$("#forms").children().length; $a++) {     //Loops over every roof (form completed) to extract information and calculate annual AC per roof
 
@@ -160,10 +160,10 @@ $(document).ready(function () {
 
          var warning = getWarnings(slope, orientation, kwp, roofId, annualAC);
          $result = "\n Annual AC output (kWh) for " + roofId + " : " + annualAC + " \n";
-        // $msg = $msg + $result + warning; // final calculation output per single roof
+         $msg = $msg + $result + warning; // final calculation output per single roof
 
-         $( "#dialog" ).append( "<p class=\"result\">" + $result +" </p>" );
-         $( "#dialog" ).append( "<p class=\"warning\">" + warning +" </p>" );
+         //$( "#dialog" ).append( "<p class=\"result\">" + $result +" </p>" );
+         //$( "#dialog" ).append( "<p class=\"warning\">" + warning +" </p>" );
        }  // loop ends here
 
        /* Cost range is calculated by inserting the sum of the kilowatt-peak value of each roof
@@ -175,14 +175,9 @@ $(document).ready(function () {
        /* prints final pop-up message including annual AC for each roof, the total annual AC for the system, an overall cost range for the installation
        as well as, should there be any, warnings regarding user input mistakes or input values restrictions */
 
-      // $msg = $msg +  "\n----------------------------------------- \  Total annual AC output for system: " + Math.round(totalAC) + "\n CO2 offset: " + co2Offset + "Kg \n range of costs: £" + lowest + " - £" + highest;
+       $msg = $msg +  "\n----------------------------------------- \n Total annual AC output for system: " + Math.round(totalAC) + "\n CO2 offset: " + co2Offset + "Kg \n range of costs: £" + lowest + " - £" + highest;
 
-       $( "#dialog" ).append( "<p class=\"result\"> ----------------------------------------- </p>" );
-       $( "#dialog" ).append( "<p class=\"result\"> Total annual AC output for system: " +  Math.round(totalAC) +" </p>" );
-       $( "#dialog" ).append( "<p class=\"result\"> CO2 offset: " + co2Offset + "Kg </p>" );
-       $( "#dialog" ).append( "<p class=\"result\"> range of costs: £" + lowest + " - £" + highest + " </p>" );
-        $( "#dialog" ).append( "<button onclick=\"myPrint()\">Print this page</button>");
-       $( "#dialog" ).dialog();
+      alert($msg);
       });
 });
 
@@ -285,6 +280,10 @@ function areaFunc(txt) {
    document.getElementById("selectedZone").style.color = 'red';
 }
 
+
+/*
+allows user to print a pdf of the page
+*/
 function myPrint() {
   window.print();
 }
