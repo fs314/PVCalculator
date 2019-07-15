@@ -132,54 +132,94 @@ $(document).ready(function () {
      });
 
       /*
-      Calculates Annual AC output(kWh and cost(£) for each roof depending on input zone, slope, orientation and shading factor
+      sends an alert box containing the results of the calculation on click of the button "submit"
       */
      $('#calculate').click(function(){
-       var $msg = " ";
-       var totalAC = 0;
-       var totalKWP = 0;
-       var costPerRoof = 0;
-       var co2offset = 0;
-       //$(".results").remove();
-       //$(".warning").remove();
+        var $msg = getResults();
+        alert($msg);
+      });
 
-       for (var $a=1; $a<=$("#forms").children().length; $a++) {     //Loops over every roof (form completed) to extract information and calculate annual AC per roof
 
-         var roofId = "roof" + $a;
-         var slope = getSlope($a);
-         var orientation = getOrientation($a);
-         var shadingFactor = getShadingFactor($a);
-         var kwp = getkWp($a);
+      /*
+      sends an alert box containing the results of the calculation on click of the button "submit"
+      */
+      $('#calculation').click(function(){
+        //deletes results of previous calculations
+        $(".result").empty();
+        $(".warning").empty();
 
-         var kk = calcKk(slope, orientation);
-         var annualAC = calcAC(shadingFactor, kwp, kk);
-         totalAC = totalAC + annualAC;
+        //reveals div on clikc
+        $('#modal').toggle('show');
 
-         totalKWP = totalKWP + kwp;
-         costPerRoof = costPerRoof + 800;
+        var results = getResults();
+        for(var i=0; i<results.length; i++) {
+            $( "#summary" ).append(results[i]);
+        }
+       });
 
-         var warning = getWarnings(slope, orientation, kwp, roofId, annualAC);
-         $result = "\n Annual AC output (kWh) for " + roofId + " : " + annualAC + " \n";
-         $msg = $msg + $result + warning; // final calculation output per single roof
+       /*
+       Allows user to print the results of the calculations
+       */
+       $("#printable").on('click',function(){
+         printData();
+       });
 
-         //$( "#dialog" ).append( "<p class=\"result\">" + $result +" </p>" );
-         //$( "#dialog" ).append( "<p class=\"warning\">" + warning +" </p>" );
-       }  // loop ends here
-
-       /* Cost range is calculated by inserting the sum of the kilowatt-peak value of each roof
-         into the below equations (estimating lower and upper bound of range respectively) and adding an extra £800 per roof. */
-       var lowest  = Math.round(2.4329*Math.pow(totalKWP,2) + 819.87*totalKWP + 1404.4) + costPerRoof;
-       var highest = Math.round(1.2785*Math.pow(totalKWP,2) + 951.68*totalKWP + 2510.8) + costPerRoof;
-
-       co2Offset = Math.round(totalAC * 0.304);
-       /* prints final pop-up message including annual AC for each roof, the total annual AC for the system, an overall cost range for the installation
-       as well as, should there be any, warnings regarding user input mistakes or input values restrictions */
-
-       $msg = $msg +  "\n----------------------------------------- \n Total annual AC output for system: " + Math.round(totalAC) + "\n CO2 offset: " + co2Offset + "Kg \n range of costs: £" + lowest + " - £" + highest;
-
-      alert($msg);
+    /* returns message containig all inputs' errors or warning encountered per roof */
+      $(function() {
+        var amap = $('.map').maphilight().parent().addClass('center-map');
       });
 });
+
+/*
+Calculates and returns values for Annual AC output(kWh and cost(£) for each roof depending on input zone, slope, orientation and shading factor
+*/
+function getResults() {
+  var $msg = " ";
+  var totalAC = 0;
+  var totalKWP = 0;
+  var costPerRoof = 0;
+  var co2offset = 0;
+  var results = [];
+
+  for (var $a=1; $a<=$("#forms").children().length; $a++) {     //Loops over every roof (form completed) to extract information and calculate annual AC per roof
+
+    var roofId = "roof" + $a;
+    var slope = getSlope($a);
+    var orientation = getOrientation($a);
+    var shadingFactor = getShadingFactor($a);
+    var kwp = getkWp($a);
+
+    var kk = calcKk(slope, orientation);
+    var annualAC = calcAC(shadingFactor, kwp, kk);
+    totalAC = totalAC + annualAC;
+
+    totalKWP = totalKWP + kwp;
+    costPerRoof = costPerRoof + 800;
+
+    var warning = getWarnings(slope, orientation, kwp, roofId, annualAC);
+    $result = "\n Annual AC output (kWh) for " + roofId + " : " + annualAC + " \n";
+    $msg = $msg + $result + warning; // final calculation output per single roof
+
+    results.push("<p class=\"result\">" + $result +" </p>" );
+    results.push("<p class=\"warning\">" + warning +" </p>");
+  }  // loop ends here
+
+  /* Cost range is calculated by inserting the sum of the kilowatt-peak value of each roof
+    into the below equations (estimating lower and upper bound of range respectively) and adding an extra £800 per roof. */
+  var lowest  = Math.round(2.4329*Math.pow(totalKWP,2) + 819.87*totalKWP + 1404.4) + costPerRoof;
+  var highest = Math.round(1.2785*Math.pow(totalKWP,2) + 951.68*totalKWP + 2510.8) + costPerRoof;
+
+  co2Offset = Math.round(totalAC * 0.304);
+
+  /* stores in array each result of the calculations including annual AC for each roof, the total annual AC for the system, an overall cost range for the installation
+  as well as, should there be any, warnings regarding user input mistakes or input values restrictions */
+  results.push("<p class=\"result\">  ----------------------------------------- </p><br />");
+  results.push("<p class=\"result\"> Total annual AC output for system: " + Math.round(totalAC) + "</p>");
+  results.push("<p class=\"result\"> CO2 offset: " + co2Offset + "Kg </p>");
+  results.push("<p class=\"result\"> range of costs: £" + lowest + " - £" + highest + "</p>");
+
+  return results;
+}
 
 /* returns message containig all inputs' errors or warning encountered per roof */
 function getWarnings(slope, orientation, kwp, roofId, annualAC) {
@@ -280,10 +320,29 @@ function areaFunc(txt) {
    document.getElementById("selectedZone").style.color = 'red';
 }
 
+/* Get the <span> element that closes the modal */
+var span = document.getElementsByClassName("close")[0];
+
+/* When the user clicks on <span> (x), close the modal */
+function closeModal() {
+  modal.style.display = "none";
+}
+
+/* When the user clicks anywhere outside of the modal, close it */
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
 
 /*
-allows user to print a pdf of the page
+Allows user to print content of alert box containing the result of the calculations
 */
-function myPrint() {
-  window.print();
+function printData()
+{
+   var divToPrint=document.getElementById("modal");
+   newWin= window.open("");
+   newWin.document.write(divToPrint.outerHTML);
+   newWin.print();
+   newWin.close();
 }

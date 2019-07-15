@@ -11,10 +11,7 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/maphilight/1.4.0/jquery.maphilight.min.js"></script>
   <script type="text/javascript">
-  $(function() {
-    var amap = $('.map').maphilight().parent().addClass('center-map');;
-    //$('.map').maphighlight().parent().addClass('center-map');
-  });
+
 </script>
   <link rel="stylesheet" href="convEnergy.css">
 </head>
@@ -57,48 +54,48 @@
 <h1>PV Calculator</h1>
 
 <div class="introduction">
-<p>Use our calculator to get the estimated annual electricity generated (kWh/year) and cost (£) of an installed system</p>
- <!--BELOW: to link to tutorials videos, substitute the # symbol with the link-->
-<p>Or if you want to understand more about how to PV works and how to estimate its efficiency accurately, look at our tutorials <a href="#"> here!</a></p>
+  <p>Use our calculator to get the estimated annual electricity generated (kWh/year) and cost (£) of an installed system</p>
+   <!--BELOW: to link to tutorials videos, substitute the # symbol with the link-->
+   <p>Or if you want to understand more about how to PV works and how to estimate its efficiency accurately, look at our tutorials <a href="#"> here!</a></p>
 </div><br />
 
 <div class="instructions">
-<p><b>Step 1:</b> Please click on the map to select the zone and hoover on each area to check your postcode's included.</p>
-<p><span id="selectedZone">Select Zone</span></p>
-<p><b>Step 2:</b> Fill the form below and click submit to view the calculated output. Click "Add" to insert and additional roof and "Delete" to remove it. </p>
+  <p><b>Step 1:</b> Please click on the map to select the zone and hoover on each area to check your postcode's included.</p>
+  <p><span id="selectedZone">Select Zone</span></p>
+  <p><b>Step 2:</b> Fill the form below and click submit to view the calculated output. Click "Add" to insert and additional roof and "Delete" to remove it. </p>
 </div>
 
 
 <div id="calculator">
-
-<form class="form-style"><br />
-<div id="forms">
-
-<div id="roof1" class="roofs">
-<span id="roofName1" class="roofNames">ROOF 1</span><br />
-<br />Slope: <input name="isslope1" type="number" id="slope1" placeholder="value between 0 - 90" title="The required value is the degrees from horizontal. Hence, an inclination of 0° represents an horizontal array; 90°represents a vertical array" required><br />
-Orientation: <select name="isorientation1" id="orientation1" title="The required value is the azimuth angle of the PV modules relative to due South. Hence, an array facing south has an azimuth value of 0°; an array facing either SW or SE has an azimuth value of 45°; and an array facing East or West has an azimuth value of 90°" required>
-</select><br />
-Shading Factor: <select name="isselectSF1" id="selectSF1" title="Factors that can cause shading include roof structures (e.g. chimneys, satellite dishes, antennas), building surroundings (e.g. trees, neighbouring buildings), temporary factors (e.g. snow, leaves) or anything nearby that is close enough to cause direct shading. Accurate estimations of shading will often require a on-site visit. To know more about how to calculate shading please refer to the MCS guide for photovoltaic systems installation (link at the bottom of page)." required>
-</select><br />
-kilowatt-peak: <input name="iskwp1" id="kwp1" type="number" title="the kWp value used shall be the sum of the data plate value (Wp at STC) of all modules installed (the value printed on the module label)" required><br />
-<br /></div>
-</div>
-<input id="calculate" type="button"  value="Submit" class="btn"/>
-</form>
-
-<input id="addRoof" type="button" value="Add" class="btn">
-<input id="deleteRoof" type="button" value= "Delete" class="btn"><br />
+  <div id="forms" class="form-style">
+    <div id="roof1" class="roofs">
+      <span id="roofName1" class="roofNames">ROOF 1</span><br />
+      <br />Slope: <input name="isslope1" type="number" id="slope1" placeholder="value between 0 - 90" title="The required value is the degrees from horizontal. Hence, an inclination of 0° represents an horizontal array; 90°represents a vertical array" required><br />
+      Orientation: <select name="isorientation1" id="orientation1" title="The required value is the azimuth angle of the PV modules relative to due South. Hence, an array facing south has an azimuth value of 0°; an array facing either SW or SE has an azimuth value of 45°; and an array facing East or West has an azimuth value of 90°" required></select><br />
+      Shading Factor: <select name="isselectSF1" id="selectSF1" title="Factors that can cause shading include roof structures (e.g. chimneys, satellite dishes, antennas), building surroundings (e.g. trees, neighbouring buildings), temporary factors (e.g. snow, leaves) or anything nearby that is close enough to cause direct shading. Accurate estimations of shading will often require a on-site visit. To know more about how to calculate shading please refer to the MCS guide for photovoltaic systems installation (link at the bottom of page)." required></select><br />
+      kilowatt-peak: <input name="iskwp1" id="kwp1" type="number" title="the kWp value used shall be the sum of the data plate value (Wp at STC) of all modules installed (the value printed on the module label)" required><br />
+    </div>
+   </div>
+   <input id="calculation" type="button" value="Submit" class="btn">
+   <input id="addRoof" type="button" value="Add" class="btn">
+   <input id="deleteRoof" type="button" value= "Delete" class="btn"><br />
 </div><br />
 
-<div id="table"></div>
+<div id="table"></div> <!--Table for sap region loaded here but hidden to user vision-->
 
-<div id="note"><p class="a">Please note <br /> "This system performance calculation has been undertaken using estimated values for array orientation, inclination and shading. Actual performance may be significantly lower or higher if the characteristics of the installed system vary from the estimated values."</p>
-</div>
+<div id="note">
+  <p class="a">Please note <br /> "This system performance calculation has been undertaken using estimated values for array orientation, inclination and shading. Actual performance may be significantly lower or higher if the characteristics of the installed system vary from the estimated values."</p>
 </div>
 
-<div id="dialog" title="Summary & Results">
-<p id="result"></p>
+</div> <!--End of div "halfscreen"-->
+
+<div id="modal">
+  <div id="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h1>Summary & Results</h1>
+      <div id="summary"></div>
+      <input id="printable" type="button" value="Print PDF" class="btn"><br />
+  </div>
 </div>
 
 <div class="footer">
