@@ -134,21 +134,12 @@ $(document).ready(function () {
       /*
       sends an alert box containing the results of the calculation on click of the button "submit"
       */
-     $('#calculate').click(function(){
-        var $msg = getResults();
-        alert($msg);
-      });
-
-
-      /*
-      sends an alert box containing the results of the calculation on click of the button "submit"
-      */
-      $('#calculation').click(function(){
+      $('#calculate').click(function(){
         //deletes results of previous calculations
         $(".result").empty();
         $(".warning").empty();
 
-        //reveals div on clikc
+        //reveals div on click
         $('#modal').toggle('show');
 
         var results = getResults();
@@ -161,10 +152,11 @@ $(document).ready(function () {
        Allows user to print the results of the calculations
        */
        $("#printable").on('click',function(){
+
          printData();
        });
 
-    /* returns message containig all inputs' errors or warning encountered per roof */
+    /* highligths the borders of ares of image map on hoover */
       $(function() {
         var amap = $('.map').maphilight().parent().addClass('center-map');
       });
@@ -334,9 +326,14 @@ Allows user to print content of alert box containing the result of the calculati
 */
 function printData()
 {
-   var divToPrint=document.getElementById("modal");
-   newWin= window.open("");
-   newWin.document.write(divToPrint.outerHTML);
-   newWin.print();
-   newWin.close();
+   WindowObject= window.open("");
+   WindowObject.document.write('<html><head><title>' + document.title  + '</title>');
+   WindowObject.document.write('</head><body >');
+   WindowObject.document.write(document.getElementById("modal").innerHTML);
+   WindowObject.document.write('</body></html>');
+   setTimeout(function() {
+      WindowObject.print();
+      WindowObject.close();
+   }, 250);
+   return true;
 }

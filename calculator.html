@@ -10,9 +10,7 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/maphilight/1.4.0/jquery.maphilight.min.js"></script>
-  <script type="text/javascript">
-
-</script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="convEnergy.css">
 </head>
 
@@ -76,7 +74,7 @@
       kilowatt-peak: <input name="iskwp1" id="kwp1" type="number" title="the kWp value used shall be the sum of the data plate value (Wp at STC) of all modules installed (the value printed on the module label)" required><br />
     </div>
    </div>
-   <input id="calculation" type="button" value="Submit" class="btn">
+   <input id="calculate" type="button" value="Submit" class="btn">
    <input id="addRoof" type="button" value="Add" class="btn">
    <input id="deleteRoof" type="button" value= "Delete" class="btn"><br />
 </div><br />
@@ -92,8 +90,12 @@
 <div id="modal">
   <div id="modal-content">
       <span class="close" onclick="closeModal()">&times;</span>
+      <img id="logo-extended" src="img\logoExtended.png" alt="company logo">
       <h1>Summary & Results</h1>
       <div id="summary"></div>
+      <p class="a">Please remember <br /> "This system performance calculation has been undertaken using estimated values for array orientation, inclination and shading. Actual performance may be significantly lower or higher if the characteristics of the installed system vary from the estimated values."</p><br />
+      <p class="a">*calculations and information contained in this page are conformative to the MCS guidelines for the installation of photovoltaic systems*</p>
+      <p class="a">For more information refer to the <a href="https://www.microgenerationcertification.org/wp-content/uploads/2018/02/PV-Book-ELECTRONIC.pdf">MCS guide</a> for the installation of photovoltaic systems or  <a href="https://www.microgenerationcertification.org/"> the MCS website</a></p>
       <input id="printable" type="button" value="Print PDF" class="btn"><br />
   </div>
 </div>
