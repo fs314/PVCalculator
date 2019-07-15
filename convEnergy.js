@@ -152,7 +152,6 @@ $(document).ready(function () {
        Allows user to print the results of the calculations
        */
        $("#printable").on('click',function(){
-
          printData();
        });
 
@@ -218,7 +217,7 @@ function getResults() {
 }
 
 /* returns message containig all inputs' errors or warning encountered per roof */
-function getWarnings(slope, orientation, kwp, annualAC) {
+function getWarnings(slope, orientation, kwp, shadingFactor, annualAC) {
   var warning = [];
 
   if (isNaN(slope) || slope < 0 || slope > 92) {
@@ -237,6 +236,10 @@ function getWarnings(slope, orientation, kwp, annualAC) {
 
  if(annualAC == 0){
     warning.push(" - we have found an error. Please check you have selected a Zone and that all inputs are valid");
+  }
+
+  if(shadingFactor>20){
+    warning.push(" - shading above 20% can significantly decrease the efficiency of a PV. Please contact us for a more detailed analysis");
   }
 
 return warning;
