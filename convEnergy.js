@@ -209,8 +209,8 @@ function getResults() {
   /* stores in array each result of the calculations including annual AC for each roof, the total annual AC for the system, an overall cost range for the installation
   as well as, should there be any, warnings regarding user input mistakes or input values restrictions */
   results.push("<p class=\"result\">  ----------------------------------------- </p><br />");
-  results.push("<p class=\"result\"> Total annual AC output for system: " + Math.round(totalAC) + "</p>");
-  results.push("<p class=\"result\"> CO2 offset: " + co2Offset + "Kg </p>");
+  results.push("<p class=\"result\"> Total annual AC output for system: " + Math.round(totalAC) + " W</p>");
+  results.push("<p class=\"result\"> CO2 offset: " + co2Offset + " Kg </p>");
   results.push("<p class=\"result\"> range of costs: £" + lowest + " - £" + highest + "</p>");
 
   return results;

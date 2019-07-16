@@ -2,6 +2,10 @@ h1{
   text-align: center;
 }
 
+body{
+  font-family: 'Roboto', sans-serif;
+}
+
 .warning{
   color: red;
 }
@@ -20,45 +24,36 @@ h1{
 }
 
 .footer {
-position: fixed;
-left: 0;
-bottom: 0;
-width: 100%;
-background-color: #e3f2f7;
-color: black;
-text-align: center;
-font-size: 11px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #e3f2f7;
+  color: black;
+  text-align: center;
+  font-size: 11px;
 }
 
-.roofNames{
-font-weight: bold;
-}
-
-.center-map {
-    margin: 0 auto;
-    float: left;
-    width: 50%;
-}
-
-#calculator {
-  position: relative;
-  float: right;
-  width: 50%;
-}
-
-#calculate {
-  position: absolute;
-
-  right:    0;
-  bottom:   0;
-}
-
+/* wrapper for SAP Regions map */
 #imageFrame{
   margin: 0 auto;
   float: left;
   width: 50%
 }
 
+/* SAP Regions map */
+.center-map {
+  margin: 0 auto;
+  float: left;
+  width: 50%;
+}
+
+/* roofs label */
+.roofNames{
+  font-weight: bold;
+}
+
+/* roofs forms */
 .roofs{
   width:48%;
   height:130px;
@@ -67,36 +62,45 @@ font-weight: bold;
   float: left;
 }
 
+/* General buttons shape*/
 .btn{
   border-radius: 6px;
   display: block;
   width: 10%;
-  float: left;
+  float: right;
 }
 
+/* "Submit" button */
+#calculator {
+  position: relative;
+  float: right;
+  width: 50%;
+}
+
+/* Modal Background*/
 #modal{
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: none;
+  position: fixed;
+  z-index: 1;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
 }
 
 /* Modal Content/Box */
 #modal-content {
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 80%;
 }
 
-/* The Close Button */
+/* Modal close button*/
 .close {
   color: #aaaaaa;
   float: right;
@@ -111,11 +115,13 @@ font-weight: bold;
   cursor: pointer;
 }
 
+/* company logo found in modal */
 #logo-extended{
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
+  width: 100%;
+  height: 100%;
 }
 
-body{
-  font-family: 'Roboto', sans-serif;
+/* "Save/Print Document" button */
+#printable{
+  width: 250px;
 }
