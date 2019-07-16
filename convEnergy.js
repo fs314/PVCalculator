@@ -155,10 +155,6 @@ $(document).ready(function () {
          printData();
        });
 
-    /* highligths the borders of ares of image map on hoover */
-      $(function() {
-        var amap = $('.map').maphilight().parent().addClass('center-map');
-      });
 });
 
 /*
@@ -339,4 +335,11 @@ function printData()
       WindowObject.close();
    }, 250);
    return true;
+}
+
+/*
+Allows user to go back to previous page
+*/
+function goBack() {
+  window.history.back();
 }

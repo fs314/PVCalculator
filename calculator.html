@@ -6,16 +6,31 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title> Annual AC and Price Estimate Calculator for PV Systems</title>
   <link rel="shortcut icon" type="image/x-icon" href="img/logo.ico" />
-  <script type="text/javascript" src="convEnergy.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script type="text/javascript" src="https://rawgit.com/kemayo/maphilight/master/jquery.maphilight.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/maphilight/1.4.0/jquery.maphilight.min.js"></script>
+  <script type="text/javascript" src="convEnergy.js"></script>
+  <script type="text/javascript">
+    /* highligths the borders of ares of image map on hoover */
+     $(function() {
+       var amap = $('.map').maphilight();
+     });
+  </script>
   <link href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="convEnergy.css">
 </head>
 
-<body id="id">
+<body>
+<div class="header">
+  <img class="centre" src="img\header-logo.png" align="centre">
+  <div class="introduction">
+    <p class="head">Use our calculator to get the estimated annual electricity generated (kWh/year) and cost (£) of an installed system</p>
+     <!--BELOW: to link to tutorials videos, substitute the # symbol with the link-->
+    <p class="head">Or if you want to understand more about how to PV works and how to estimate its efficiency accurately, look at our tutorials <a href="#"> here!</a></p>
+    <input type="button" id="backbtn" class="btn" name="" value="Go back" onclick="goBack()"><br />
+  </div><br />
+
+</div>
 
 
 <div id="imageFrame" class="halfscreen">
@@ -53,11 +68,6 @@
 <div class="halfscreen">
 <h1>PV Calculator</h1>
 
-<div class="introduction">
-  <p>Use our calculator to get the estimated annual electricity generated (kWh/year) and cost (£) of an installed system</p>
-   <!--BELOW: to link to tutorials videos, substitute the # symbol with the link-->
-   <p>Or if you want to understand more about how to PV works and how to estimate its efficiency accurately, look at our tutorials <a href="#"> here!</a></p>
-</div><br />
 
 <div class="instructions">
   <p><b>Step 1:</b> Please click on the map to select the zone and hoover on each area to check your postcode's included.</p>
