@@ -155,6 +155,10 @@ $(document).ready(function () {
          printData();
        });
 
+       /* highligths the borders of ares of image map on hoover */
+        $(function() {
+          var amap = $('.map').maphilight();
+        });
 });
 
 /*
