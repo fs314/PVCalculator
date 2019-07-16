@@ -190,7 +190,7 @@ function getResults() {
     $result = "\n Annual AC output (kWh) for " + roofId + " : " + annualAC + " \n";
     results.push("<p class=\"result\">" + $result +" </p>" );   // final calculation output per single roof
 
-    var warning = getWarnings(slope, orientation, kwp, annualAC);
+    var warning = getWarnings(slope, orientation, kwp, shadingFactor, annualAC);
     if(warning.length>0) {
       results.push("<p class=\"warning\">" +"Warning: we found the following errors for " + roofId + ": "+" </p>");
       for(var i=0; i<warning.length; i++) {
@@ -234,11 +234,11 @@ function getWarnings(slope, orientation, kwp, shadingFactor, annualAC) {
     warning.push(" - an orientation above 90° is not ideal to install PV, please contact us for a more detailed analysis");
   }
 
- if(annualAC == 0){
+ if(isNaN(annualAC) || annualAC == 0){
     warning.push(" - we have found an error. Please check you have selected a Zone and that all inputs are valid");
   }
 
-  if(shadingFactor>20){
+  if(shadingFactor<0.8){
     warning.push(" - shading above 20% can significantly decrease the efficiency of a PV. Please contact us for a more detailed analysis");
   }
 
