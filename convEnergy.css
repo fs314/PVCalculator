@@ -5,6 +5,11 @@ h1{
 body{
   font-family: 'Roboto', sans-serif;
 }
+
+hr{
+  border-top: 1px solid black;
+}
+
 /*places header logo in the center*/
 .centre{
   display: block;
